@@ -18,7 +18,7 @@ Simply run:
 Example of usage:
 
 ```python
-from src.moh_data.main import Basic
+from moh_data.main import Basic
 import matplotlib.pyplot as plt
 
 run_data = Basic()
