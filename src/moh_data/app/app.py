@@ -1,4 +1,3 @@
-
 import sys
 
 from PyQt4 import QtGui
@@ -14,5 +13,4 @@ def main():
     sys.exit(app.exec_())
 
 
-# if __name__ == '__main__':
 main()
