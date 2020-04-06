@@ -13,12 +13,12 @@ Dependencies:
 
 Simply run:
 
-`pip install git+https://github.com/mahyar-osn/covid19_nz_data_processing.git`
+`pip install git+https://github.com/ABI-Covid-19/moh-data.git`
 
 Example of usage:
 
 ```python
-from covid19_nz_data_processing.main import Basic
+from src.moh_data.main import Basic
 import matplotlib.pyplot as plt
 
 run_data = Basic()

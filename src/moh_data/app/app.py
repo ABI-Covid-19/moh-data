@@ -3,7 +3,7 @@ import sys
 
 from PyQt4 import QtGui
 
-from src.covid19_nz_data_processing.app.app_widget import PlotWidget
+from src.moh_data.app.app_widget import PlotWidget
 
 
 def main():

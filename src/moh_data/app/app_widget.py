@@ -3,8 +3,8 @@ import sys
 
 from PyQt4 import QtGui
 
-from src.covid19_nz_data_processing.app.ui_plot_app import Ui_MainWindow
-from src.covid19_nz_data_processing.main import Basic
+from src.moh_data.app.ui_plot_app import Ui_MainWindow
+from src.moh_data.main import Basic
 
 
 class PlotWidget(QtGui.QMainWindow):

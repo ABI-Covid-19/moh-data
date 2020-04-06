@@ -1,4 +1,4 @@
-from src.covid19_nz_data_processing.core.collector import DataCollector
+from src.moh_data.core.collector import DataCollector
 
 
 class Basic:
