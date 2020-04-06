@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-from setuptools.command.install import install
 import os
 import io
 
@@ -33,7 +32,7 @@ source_license = readfile("LICENSE")
 setup(
     name="moh-data",
     version="0.0.1",
-    description="Simple script to automatically fetch, process, and plot the NZ covid-19 cases data",
+    description="Script to automatically fetch, process, and plot the NZ covid-19 cases data",
     long_description="\n".join(readme) + source_license,
     classifiers=[
         "Programming Language :: Python",
@@ -41,7 +40,7 @@ setup(
     ],
     author="Auckland Bioengineering Institute",
     author_email="m.osanlouy@auckland.ac.nz",
-    url="https://github.com/mahyar-osn/covid19_nz_data_processing/",
+    url="https://github.com/ABI-Covid-19/moh-data/",
     license="Apache Software License",
     packages=find_packages("src"),
     package_dir={"": "src"},
@@ -49,4 +48,3 @@ setup(
     zip_safe=False,
     install_requires=requires,
 )
-
