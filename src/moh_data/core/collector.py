@@ -51,11 +51,11 @@ class DataCollector(object):
         return total
 
     def get_daily_sum_confirmed(self):
-        self._confirmed_total = self._get_daily_sum(self._confirmed_sheet, 'Daily total of confirmed')
+        self._confirmed_total = self._get_daily_sum(self._confirmed_sheet, 'Daily confirmed cases')
         return self._confirmed_total
 
     def get_daily_sum_probable(self):
-        self._probable_total = self._get_daily_sum(self._probable_sheet, 'Daily total of probable')
+        self._probable_total = self._get_daily_sum(self._probable_sheet, 'Daily probable cases')
         return self._probable_total
 
     def generate_combined_sum(self):
@@ -64,6 +64,13 @@ class DataCollector(object):
             self._combined_sum = self._combined_sum.combine_first(df)
         self._combined_sum = self._combined_sum.fillna(0)
 
-        self._combined_sum['Total'] = self._combined_sum["Daily total of confirmed"] + \
-                                      self._combined_sum["Daily total of probable"]
-        return self._combined_sum
+        self._combined_sum['Total'] = self._combined_sum["Daily confirmed cases"] + \
+                                      self._combined_sum["Daily probable cases"]
+
+        gs = self._generate_grand_sum()
+        return self._combined_sum, gs
+
+    def _generate_grand_sum(self):
+        grand_sum = self._combined_sum.cumsum()
+        grand_sum.columns = ['Total confirmed cases', 'Total probable cases', 'Grand total']
+        return grand_sum
