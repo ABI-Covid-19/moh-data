@@ -1,4 +1,4 @@
-from core.collector import DataCollector
+from .core.collector import DataCollector
 
 import matplotlib.pyplot as plt
 
