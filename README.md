@@ -1,6 +1,6 @@
 # COVID-19 NZ Data Processing
 
-A simple script to automatically fetch, process, and plot the NZ covid-19 cases data from the Ministry of Health's website (https://health.govt.nz).
+Script to automatically fetch, process, and plot the NZ covid-19 data from the Ministry of Health's website (https://health.govt.nz).
 
 Getting started:
 - 
@@ -26,7 +26,6 @@ run_data.plot_daily_trend()
 run_data.plot_cumulative_sum()
 
 plt.show()
-
 ```
 
 Running the above code in a file should produce the following two figures:
