@@ -24,7 +24,7 @@ if sys.platform == 'win32':
     base = 'Win32GUI'
 
 executables = [
-    Executable('src/covid19_nz_data_processing/app/app.py', base=base)
+    Executable('src/moh-data/app/app.py', base=base)
 ]
 
 
