@@ -29,8 +29,8 @@ executables = [
 
 
 setup(
-    name="covid19_nz_data_processing",
+    name="moh-data",
     version="0.0.1",
-    description="Simple script to automatically fetch, process, and plot the NZ covid-19 cases data",
+    description="Script to automatically fetch, process, and plot the NZ covid-19 cases data",
     executables=executables
 )
