@@ -1,5 +1,7 @@
 from src.moh_data.core.collector import DataCollector
 
+import matplotlib.pyplot as plt
+
 
 class Basic:
 
@@ -10,6 +12,7 @@ class Basic:
         self._total_daily_confirmed = None
         self._total_daily_probable = None
         self._total_combined = None
+        self._grand_sum = None
 
         self._run()
 
@@ -18,18 +21,16 @@ class Basic:
         self._probable = self._excel_file.parse_probable()
         self._total_daily_confirmed = self._excel_file.get_daily_sum_confirmed()
         self._total_daily_probable = self._excel_file.get_daily_sum_probable()
-        self._total_combined = self._excel_file.generate_combined_sum()
+        self._total_combined, self._grand_sum = self._excel_file.generate_combined_sum()
 
     def plot_daily_trend(self):
         self._total_combined.plot()
 
     def plot_cumulative_sum(self):
-        self._total_combined.cumsum().plot()
+        self._grand_sum.plot()
 
 
 if __name__ == '__main__':
-    import matplotlib.pyplot as plt
-
     run_data = Basic()
     run_data.plot_daily_trend()
     run_data.plot_cumulative_sum()
