@@ -26,6 +26,7 @@ requires = [
     "requests",
     "numpy",
     "matplotlib",
+    "redis"
 ]
 source_license = readfile("LICENSE")
 
