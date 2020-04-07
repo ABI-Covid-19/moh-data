@@ -19,17 +19,17 @@ Example of usage:
 
 ```python
 from moh_data.main import Basic
-import matplotlib.pyplot as plt
 
 run_data = Basic()
 run_data.plot_daily_trend()
 run_data.plot_cumulative_sum()
-
-plt.show()
+run_data.plot_cumulative_arrival_sum()
 ```
 
-Running the above code in a file should produce the following two figures:
+Running the above code in a file should produce the following three figures:
 
 ![alt text](resources/Figure_1.png)
 
 ![alt text](resources/Figure_2.png)
+
+![alt text](resources/Figure_3.png)
