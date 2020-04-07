@@ -64,7 +64,7 @@ class DataCollector(object):
 
     def _initialize(self):
         fef = FindExcelFile()
-        self._excel_file = fef.fetch_file()
+        self._excel_file = fef.fetch()
 
     def parse_confirmed(self):
         self._confirmed_sheet = pd.read_excel(self._excel_file,
