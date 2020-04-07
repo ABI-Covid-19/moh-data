@@ -10,12 +10,18 @@ Dependencies:
 - xlrd
 - beautifulsoup4
 - matplotlib
+- redis
 
 Simply run:
 
 `pip install git+https://github.com/ABI-Covid-19/moh-data.git`
 
 Example of usage:
+
+This new version of moh-data uses [Redis](https://redis.io/) as an in-memory data solution and message broker.
+You will need to [download](https://redis.io/download) and install redis server in order to be able to run this code. 
+
+Simply, create a `.py` file and copy-paste the code below:
 
 ```python
 from moh_data.main import Basic
@@ -26,7 +32,7 @@ run_data.plot_cumulative_sum()
 run_data.plot_daily_arrival_sum()
 ```
 
-Running the above code in a file should produce the following three figures:
+Running the above code in a file should produce the following three figures: (*Note that Redis server must be running)
 
 ![alt text](resources/Figure_1.png)
 
