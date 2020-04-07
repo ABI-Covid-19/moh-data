@@ -20,7 +20,7 @@ class FindExcelFile(object):
 
         json.dumps({
             "cached": False,
-       })
+        })
 
         redis.setex(self._cases_url, 60, str())
 
