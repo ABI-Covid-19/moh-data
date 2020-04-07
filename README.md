@@ -23,7 +23,7 @@ from moh_data.main import Basic
 run_data = Basic()
 run_data.plot_daily_trend()
 run_data.plot_cumulative_sum()
-run_data.plot_cumulative_arrival_sum()
+run_data.plot_daily_arrival_sum()
 ```
 
 Running the above code in a file should produce the following three figures:

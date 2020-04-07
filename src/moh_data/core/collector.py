@@ -58,7 +58,7 @@ class DataCollector(object):
         self._arrival_probable_total = self._get_custom_sum(self._probable_sheet, 'Arrival date',
                                                             'Arrival date of daily probable cases')
 
-    def get_cumulative_arrival_sum(self):
+    def get_daily_arrival_sum(self):
         self._generate_arrival_date_combined_sum()
         return self._arrival_combined_sum
 
