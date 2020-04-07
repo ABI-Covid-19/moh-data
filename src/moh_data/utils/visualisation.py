@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
 
 
@@ -12,16 +13,21 @@ class Visualisation:
         self._kind = kind
         self._tick_int = None
 
-    def set_data(self, data, tick_interval=None):
+    def set_data(self, data, tick_interval=None, save=None):
         if self._df is not None:
             self._df = None
         self._df = data
 
         if tick_interval:
             self._tick_int = tick_interval
-        self._plot()
 
-    def _plot(self):
+        output_image = None
+        if save:
+            output_image = save
+
+        self._plot(output_image)
+
+    def _plot(self, output=None):
         if self._ax is not None:
             self._ax = None
 
@@ -34,3 +40,8 @@ class Visualisation:
             self._ax.xaxis.set_major_locator(x_loc)
             y_loc = plticker.MultipleLocator(base=self._tick_int[1])
             self._ax.yaxis.set_major_locator(y_loc)
+
+        if output:
+            plt.savefig(output)
+
+        plt.show()
