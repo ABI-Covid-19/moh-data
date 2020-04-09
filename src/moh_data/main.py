@@ -1,5 +1,5 @@
-from src.moh_data.core.collector import DataCollector
-from src.moh_data.utils.visualisation import Visualisation
+from .core.collector import DataCollector
+from .utils.visualisation import Visualisation
 
 
 class Basic:
