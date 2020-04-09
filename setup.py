@@ -31,7 +31,7 @@ source_license = readfile("LICENSE")
 
 setup(
     name="moh-data",
-    version="0.0.1",
+    version="0.1.0",
     description="Script to automatically fetch, process, and plot the NZ covid-19 cases data",
     long_description="\n".join(readme) + source_license,
     classifiers=[
