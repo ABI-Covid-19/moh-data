@@ -11,9 +11,17 @@ Dependencies:
 - beautifulsoup4
 - matplotlib
 
-Simply run:
+Simply clone the repo:
 
-`pip install git+https://github.com/mahyar-osn/moh-data.git`
+`git clone https://github.com/mahyar-osn/moh-data.git`
+
+Then:
+
+`cd moh-data`
+
+Run:
+
+`pip install -e .`
 
 Example of usage:
 
