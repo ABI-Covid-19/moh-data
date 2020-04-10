@@ -13,7 +13,7 @@ Dependencies:
 
 Simply run:
 
-`pip install git+https://github.com/ABI-Covid-19/moh-data.git`
+`pip install git+https://github.com/mahyar-osn/moh-data.git`
 
 Example of usage:
 
