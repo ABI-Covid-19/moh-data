@@ -1,3 +1,4 @@
+# from .query import FindExcelFile
 from .query import FindExcelFile
 
 import numpy as np
@@ -31,6 +32,10 @@ class DataCollector(object):
         self._arrival_probable_total = None
         self._arrival_combined_sum = None
 
+        self._overseas_confirmed_total = None
+        self._overseas_probable_total = None
+        self._overseas_combined_sum = None
+
     def get_daily_sum_confirmed(self):
         self._confirmed_total = self._get_custom_sum(self._confirmed_sheet, 'Date of report', 'Daily confirmed cases')
         return self._confirmed_total
@@ -58,9 +63,25 @@ class DataCollector(object):
         self._arrival_probable_total = self._get_custom_sum(self._probable_sheet, 'Arrival date',
                                                             'Arrival date of daily probable cases')
 
+    def get_overseas_sum_confirmed(self):
+        _check_zero(self._confirmed_sheet, ['Arrival date'])
+        _was_overseas = self._confirmed_sheet.loc[self._confirmed_sheet['International travel'] == 'Yes']
+        self._overseas_confirmed_total = self._get_custom_sum(self._confirmed_sheet, 'Date of report',
+                                                              'Overseas confirmed cases on the date of reported')
+
+    def get_overseas_sum_probable(self):
+        _check_zero(self._probable_sheet, ['Arrival date'])
+        _was_overseas = self._probable_sheet.loc[self._probable_sheet['International travel'] == 'Yes']
+        self._overseas_probable_total = self._get_custom_sum(self._probable_sheet, 'Date of report',
+                                                             'Overseas probable cases on the date of reported')
+
     def get_daily_arrival_sum(self):
         self._generate_arrival_date_combined_sum()
         return self._arrival_combined_sum
+
+    def get_overseas_reported_sum(self):
+        self._generate_overseas_reported_combined_sum()
+        return self._overseas_combined_sum
 
     def _initialize(self):
         fef = FindExcelFile()
@@ -114,3 +135,18 @@ class DataCollector(object):
         self._arrival_combined_sum['Total'] = self._arrival_combined_sum["Arrival date of daily confirmed cases"] + \
                                               self._arrival_combined_sum["Arrival date of daily probable cases"]
 
+    def _generate_overseas_reported_combined_sum(self):
+        if self._overseas_confirmed_total is None:
+            self.get_overseas_sum_confirmed()
+        if self._overseas_probable_total is None:
+            self.get_overseas_sum_probable()
+
+        self._overseas_combined_sum = pd.DataFrame()
+        for df in [self._overseas_confirmed_total, self._overseas_probable_total]:
+            self._overseas_combined_sum = self._overseas_combined_sum.combine_first(df)
+        self._overseas_combined_sum = self._overseas_combined_sum.fillna(0)
+
+        self._overseas_combined_sum['Total'] = self._overseas_combined_sum["Overseas confirmed cases on the date of " \
+                                                                           "reported"] + \
+                                               self._overseas_combined_sum["Overseas probable cases on the date of " \
+                                                                           "reported"]
