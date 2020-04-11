@@ -29,23 +29,27 @@ class Basic:
         self._total_arrival = self._excel_file.get_daily_arrival_sum()
         self._total_overseas_reported_date = self._excel_file.get_overseas_reported_sum()
 
-    def plot_daily_trend(self):
-        self._vis.set_data(self._total_combined, tick_interval=(2.0, 5.0))
+    def plot_daily_trend(self, s=None):
+        self._vis.set_data(self._total_combined, tick_interval=(2.0, 5.0), save=s)
 
-    def plot_cumulative_sum(self):
-        self._vis.set_data(self._grand_sum, tick_interval=(2.0, 100.0))
+    def plot_cumulative_sum(self, s=None):
+        self._vis.set_data(self._grand_sum, tick_interval=(2.0, 100.0), save=s)
 
-    def plot_daily_arrival_sum(self):
-        self._vis.set_data(self._total_arrival, tick_interval=(2.0, 5.0))
+    def plot_daily_arrival_sum(self, s=None):
+        self._vis.set_data(self._total_arrival, tick_interval=(2.0, 5.0), save=s)
 
-    def plot_overseas_date_reported(self):
-        self._vis.set_data(self._total_overseas_reported_date, tick_interval=(2.0, 5.0))
+    def plot_overseas_date_reported(self, s=None):
+        self._vis.set_data(self._total_overseas_reported_date, tick_interval=(2.0, 5.0), save=s)
 
 
 if __name__ == '__main__':
-    run_data = Basic()
-    run_data.plot_daily_trend()
-    run_data.plot_cumulative_sum()
-    run_data.plot_daily_arrival_sum()
-    run_data.plot_overseas_date_reported()
+    op = None
+    save = False
+    if save:
+        op = '../../resources/'
 
+    run_data = Basic()
+    run_data.plot_daily_trend(s=op + 'Figure_1')
+    run_data.plot_cumulative_sum(s=op + 'Figure_2')
+    run_data.plot_daily_arrival_sum(s=op + 'Figure_3')
+    run_data.plot_overseas_date_reported(s=op + 'Figure_4')
