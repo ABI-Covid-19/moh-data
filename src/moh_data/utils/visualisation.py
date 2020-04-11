@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
 
+import pandas as pd
+
 
 class Visualisation:
 
@@ -35,6 +37,8 @@ class Visualisation:
         self._ax.grid(axis='y', linewidth=0.2)
         self._ax.grid(axis='x', linewidth=0.2)
 
+        self._ax.set_xlim(pd.Timestamp(self._df.index.min()), pd.Timestamp(self._get_last_available_date()))
+
         if self._tick_int:
             x_loc = plticker.MultipleLocator(base=self._tick_int[0])
             self._ax.xaxis.set_major_locator(x_loc)
@@ -45,3 +49,6 @@ class Visualisation:
             plt.savefig(output)
 
         plt.show()
+
+    def _get_last_available_date(self):
+        return self._df.index[self._df.index.argsort() == (len(self._df.index)-2)][0]
