@@ -1,4 +1,3 @@
-# from .query import FindExcelFile
 from .query import FindExcelFile
 
 import numpy as np
