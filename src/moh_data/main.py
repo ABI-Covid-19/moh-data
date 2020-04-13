@@ -1,3 +1,5 @@
+import os
+
 from .core.collector import DataCollector
 from .utils.visualisation import Visualisation
 
@@ -29,6 +31,18 @@ class Basic:
         self._total_arrival = self._excel_file.get_daily_arrival_sum()
         self._total_overseas_reported_date = self._excel_file.get_overseas_reported_sum()
 
+    def get_daily_data(self):
+        return self._total_combined
+
+    def get_daily_cumulative_data(self):
+        return self._grand_sum
+
+    def get_date_of_arrival_of_overseas_cases_data(self):
+        return self._total_arrival
+
+    def get_date_of_reported_of_overseas_cases_data(self):
+        return self._total_overseas_reported_date
+
     def plot_daily_trend(self, s=None):
         self._vis.set_data(self._total_combined, tick_interval=(2.0, 5.0), save=s)
 
@@ -41,15 +55,25 @@ class Basic:
     def plot_overseas_date_reported(self, s=None):
         self._vis.set_data(self._total_overseas_reported_date, tick_interval=(2.0, 5.0), save=s)
 
+    @staticmethod
+    def export_data(data, filename):
+        if 'csv' not in os.path.basename(filename):
+            filename += '.csv'
+        data.to_csv(filename, sep=',')
+        return
+
 
 if __name__ == '__main__':
-    op = None
+    run_data = Basic()
     save = False
     if save:
         op = '../../resources/'
-
-    run_data = Basic()
-    run_data.plot_daily_trend(s=op + 'Figure_1')
-    run_data.plot_cumulative_sum(s=op + 'Figure_2')
-    run_data.plot_daily_arrival_sum(s=op + 'Figure_3')
-    run_data.plot_overseas_date_reported(s=op + 'Figure_4')
+        run_data.plot_daily_trend(s='{}Figure_1'.format(op))
+        run_data.plot_cumulative_sum(s='{}Figure_2'.format(op))
+        run_data.plot_daily_arrival_sum(s='{}Figure_3'.format(op))
+        run_data.plot_overseas_date_reported(s='{}Figure_4'.format(op))
+    else:
+        run_data.plot_daily_trend()
+        run_data.plot_cumulative_sum()
+        run_data.plot_daily_arrival_sum()
+        run_data.plot_overseas_date_reported()
