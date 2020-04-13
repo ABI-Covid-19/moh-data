@@ -9,6 +9,10 @@ def _check_zero(data, cols):
         data[col] = data[col].replace({'0': np.nan, 0: np.nan})
 
 
+def _filter_null(data):
+    return data[data.index.notnull()]
+
+
 class DataCollector(object):
 
     def __init__(self, *args):
@@ -76,6 +80,7 @@ class DataCollector(object):
 
     def get_daily_arrival_sum(self):
         self._generate_arrival_date_combined_sum()
+        self._arrival_combined_sum = _filter_null(self._arrival_combined_sum)
         return self._arrival_combined_sum
 
     def get_overseas_reported_sum(self):
