@@ -13,15 +13,7 @@ Dependencies:
 
 Simply clone the repo:
 
-`git clone https://github.com/mahyar-osn/moh-data.git`
-
-Then:
-
-`cd moh-data`
-
-Run:
-
-`pip install -e .`
+`pip install git+https://github.com/ABI-Covid-19/moh-data.git`
 
 Example of usage:
 
