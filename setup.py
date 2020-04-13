@@ -40,7 +40,7 @@ setup(
     ],
     author="Auckland Bioengineering Institute",
     author_email="m.osanlouy@auckland.ac.nz",
-    url="https://github.com/mahyar-osn/moh-data",
+    url="https://github.com/ABI-Covid-19/moh-data",
     license="Apache Software License",
     packages=find_packages("src"),
     package_dir={"": "src"},
