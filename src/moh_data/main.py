@@ -1,4 +1,7 @@
 import os
+from datetime import datetime
+
+import numpy as np
 
 from .core.collector import DataCollector
 from .utils.visualisation import Visualisation
@@ -30,6 +33,110 @@ class Basic:
         self._grand_sum = self._excel_file.get_grand_sum()
         self._total_arrival = self._excel_file.get_daily_arrival_sum()
         self._total_overseas_reported_date = self._excel_file.get_overseas_reported_sum()
+
+    def get_confirmed_cases_on(self, date):
+        """
+        Get the number of confirmed cases on a particular date
+
+        :param date: list with (month, day) format e.g. (04, 14).
+        :return:
+        """
+        return self._get_cases_on(self._total_daily_confirmed, date)
+
+    def get_confirmed_cases_between(self, dates):
+        """
+        Get the number of confirmed cases between two dates
+
+        :param dates: list of lists with ((month, day), (month, day)) format e.g. ((04, 08), (04, 14)).
+        :return:
+        """
+        return self._get_cases_between(self._total_daily_confirmed, dates)
+
+    def get_probable_cases_on(self, date):
+        """
+        Get the number of probable cases on a particular date
+
+        :param date: list with (month, day) format e.g. (04, 14).
+        :return:
+        """
+        return self._get_cases_on(self._total_daily_probable, date)
+
+    def get_probable_cases_between(self, dates):
+        """
+        Get the number of probable cases between two dates
+
+        :param dates: list of lists with ((month, day), (month, day)) format e.g. ((04, 08), (04, 14)).
+        :return:
+        """
+        return self._get_cases_between(self._total_daily_probable, dates)
+
+    def get_cases_on(self, date):
+        """
+        Get the number of total confirmed and probable cases on a particular date
+
+        :param date: list with (month, day) format e.g. (04, 14).
+        :return:
+        """
+        return self._get_cases_on(self._total_combined.Total, date)
+
+    def get_cases_between(self, dates):
+        """
+        Get the number of total confirmed and probable cases between two dates
+
+        :param dates: list of lists with ((month, day), (month, day)) format e.g. ((04, 08), (04, 14)).
+        :return:
+        """
+        return self._get_cases_between(self._total_combined.Total, dates)
+
+    def get_cumulative_confirmed_cases_on(self, date):
+        """
+        Get the cumulative number of total confirmed cases on a particular date
+
+        :param date: list with (month, day) format e.g. (04, 14).
+        :return:
+        """
+        return self._get_cases_on(self._grand_sum['Total confirmed cases'], date)
+
+    def get_cumulative_probable_cases_one(self, date):
+        """
+        Get the cumulative number of total probable cases on a particular date
+
+        :param date: list with (month, day) format e.g. (04, 14).
+        :return:
+        """
+        return self._get_cases_on(self._grand_sum['Total probable cases'], date)
+
+    def get_cumulative_total_cases_one(self, date):
+        """
+        Get the cumulative number of total confirmed and probable cases on a particular date
+
+        :param date: list with (month, day) format e.g. (04, 14).
+        :return:
+        """
+        return self._get_cases_on(self._grand_sum['Grand total'], date)
+
+    @staticmethod
+    def _get_cases_on(sheet, date):
+        if len(sheet[sheet.index == datetime(2020, date[0], date[1])]) > 0:
+            return int(sheet[sheet.index == datetime(2020, date[0], date[1])].get_values().flatten()[0])
+        else:
+            return 0
+
+    @staticmethod
+    def _get_cases_between(sheet, dates):
+        date_one = datetime(2020, dates[0][0], dates[0][1])
+        date_two = datetime(2020, dates[1][0], dates[1][1])
+
+        lesser = date_one if date_one < date_two else date_two
+        greater = date_two if lesser != date_two else date_one
+
+        mask = (sheet.index > lesser) & (sheet.index <= greater)
+        if isinstance(sheet.loc[mask].sum(), np.float):
+            return int(sheet.loc[mask].sum())
+        elif len(sheet.loc[mask]) > 0:
+            return int(sheet.loc[mask].sum().get_values().flatten()[0])
+        else:
+            return 0
 
     def get_daily_data(self):
         return self._total_combined
@@ -77,3 +184,18 @@ if __name__ == '__main__':
         run_data.plot_cumulative_sum()
         run_data.plot_daily_arrival_sum()
         run_data.plot_overseas_date_reported()
+
+        print('Confirmed cases on 2020-04-14 = ', run_data.get_confirmed_cases_on((4, 14)))
+        print('Confirmed cases between 2020-04-08 and 2020-04-14 =',
+              run_data.get_confirmed_cases_between(((4, 8), (4, 14))))
+
+        print('Probable cases on 2020-04-14 = ', run_data.get_probable_cases_on((4, 14)))
+        print('Probable cases between 2020-04-08 and 2020-04-14 =',
+              run_data.get_probable_cases_between(((4, 8), (4, 14))))
+
+        print('Total cases on 2020-04-14 = ', run_data.get_cases_on((4, 14)))
+        print('Total cases between 2020-04-08 and 2020-04-14 =', run_data.get_cases_between(((4, 8), (4, 14))))
+
+        print('Cumulative confirmed cases on 2020-04-14 = ', run_data.get_cumulative_confirmed_cases_on((4, 14)))
+        print('Cumulative probable cases on 2020-04-14 = ', run_data.get_cumulative_probable_cases_one((4, 14)))
+        print('Cumulative total cases on 2020-04-14 = ', run_data.get_cumulative_total_cases_one((4, 14)))
