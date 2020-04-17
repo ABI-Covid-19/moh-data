@@ -68,13 +68,13 @@ class DataCollector(object):
 
     def get_overseas_sum_confirmed(self):
         _check_zero(self._confirmed_sheet, ['Arrival date'])
-        _was_overseas = self._confirmed_sheet.loc[self._confirmed_sheet['International travel'] == 'Yes']
+        _was_overseas = self._confirmed_sheet.loc[self._confirmed_sheet['Overseas travel'] == 'Yes']
         self._overseas_confirmed_total = self._get_custom_sum(self._confirmed_sheet, 'Date of report',
                                                               'Overseas confirmed cases on the date of reported')
 
     def get_overseas_sum_probable(self):
         _check_zero(self._probable_sheet, ['Arrival date'])
-        _was_overseas = self._probable_sheet.loc[self._probable_sheet['International travel'] == 'Yes']
+        _was_overseas = self._probable_sheet.loc[self._probable_sheet['Overseas travel'] == 'Yes']
         self._overseas_probable_total = self._get_custom_sum(self._probable_sheet, 'Date of report',
                                                              'Overseas probable cases on the date of reported')
 
@@ -113,7 +113,7 @@ class DataCollector(object):
         total = pd.concat([sheet[current_col], total_num], axis=1).drop_duplicates()
         total.columns = [current_col, desired_col]
         total.set_index(current_col, inplace=True)
-        total.index = pd.to_datetime(total.index)
+        total.index = pd.to_datetime(total.index, format="%d/%m/%Y")
         return total
 
     def _generate_combined_sum(self):
