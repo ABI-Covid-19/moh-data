@@ -51,4 +51,4 @@ class Visualisation:
         plt.show()
 
     def _get_last_available_date(self):
-        return self._df.index[self._df.index.argsort() == (len(self._df.index)-2)][0]
+        return self._df.index[self._df.index.argsort() == (len(self._df.index) - 2)][0]

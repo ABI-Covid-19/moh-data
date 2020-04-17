@@ -11,9 +11,9 @@ Dependencies:
 - beautifulsoup4
 - matplotlib
 
-Simply clone the repo:
+Simply install by:
 
-`pip install git+https://github.com/ABI-Covid-19/moh-data.git`
+`pip install --upgrade git+https://github.com/ABI-Covid-19/moh-data.git`
 
 Example of usage:
 
