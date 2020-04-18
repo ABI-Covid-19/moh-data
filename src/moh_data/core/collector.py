@@ -113,7 +113,16 @@ class DataCollector(object):
         total = pd.concat([sheet[current_col], total_num], axis=1).drop_duplicates()
         total.columns = [current_col, desired_col]
         total.set_index(current_col, inplace=True)
-        total.index = pd.to_datetime(total.index, format="%d/%m/%Y")
+        index = total.index
+        names = index.names
+        temp_index_list = list()
+        for index in total.index:
+            try:
+                temp_index_list.append(pd.to_datetime(index, format="%Y-%m-%d %H:%M:%S"))
+            except ValueError:
+                temp_index_list.append(pd.to_datetime(index, format="%d/%m/%Y"))
+        total.insert(0, names[0], temp_index_list)
+        total = total.set_index(names[0])
         return total
 
     def _generate_combined_sum(self):
