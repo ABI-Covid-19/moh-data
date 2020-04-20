@@ -76,7 +76,7 @@ class Basic:
                              .format(day, len(sheet) - 1))
         return int(sheet.iloc[day])
 
-    def get_cumulative_recovered(self, day):
+    def get_cumulative_recovered_cases_on(self, day):
         """
         Get the cumulative number of total recovered cases on a particular date
 
@@ -86,7 +86,7 @@ class Basic:
         df = self._database.get_cumulative_recovered()
         return df[df.columns[day]].values[-1]
 
-    def get_cumulative_dead(self, day):
+    def get_cumulative_dead_cases_on(self, day):
         """
         Get the cumulative number of total dead cases on a particular date
 
@@ -250,8 +250,8 @@ if __name__ == '__main__':
         print('Cumulative confirmed cases on day 41 = ', run_data.get_cumulative_confirmed_cases_on_day(40))
         print('Cumulative probable cases on day 41 = ', run_data.get_cumulative_probable_cases_on_day(40))
         print('Cumulative total cases on day 41 = ', run_data.get_cumulative_total_cases_on_day(40))
-        print('Cumulative recovered cases on day 80 = ', run_data.get_cumulative_recovered(80))
-        print('Cumulative dead cases on day 80 = ', run_data.get_cumulative_dead(80))
+        print('Cumulative recovered cases on day 80 = ', run_data.get_cumulative_recovered_cases_on(80))
+        print('Cumulative dead cases on day 80 = ', run_data.get_cumulative_dead_cases_on(80))
 
         print('Confirmed cases on 2020-04-14 = ', run_data.get_confirmed_cases_on_date((4, 14)))
         print('Confirmed cases between 2020-04-08 and 2020-04-14 =',
