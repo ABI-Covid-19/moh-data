@@ -39,6 +39,11 @@ class DataCollector(object):
         self._overseas_probable_total = None
         self._overseas_combined_sum = None
 
+    def _initialize(self):
+        fef = FindExcelFile()
+        self._excel_file = fef.fetch_file()
+        self._jhu = JohnsHopkins()
+
     def get_daily_sum_confirmed(self):
         self._confirmed_total = self._get_custom_sum(self._confirmed_sheet, 'Date of report', 'Daily confirmed cases')
         return self._confirmed_total
@@ -87,10 +92,6 @@ class DataCollector(object):
         self._generate_overseas_reported_combined_sum()
         return self._overseas_combined_sum
 
-    def _initialize(self):
-        fef = FindExcelFile()
-        self._excel_file = fef.fetch_file()
-
     def parse_confirmed(self):
         self._confirmed_sheet = pd.read_excel(self._excel_file,
                                               sheet_name='Confirmed',
@@ -123,6 +124,8 @@ class DataCollector(object):
                 temp_index_list.append(pd.to_datetime(index, format="%d/%m/%Y"))
         total.insert(0, names[0], temp_index_list)
         total = total.set_index(names[0])
+        idx = pd.date_range(total.index.min(), total.index.max())
+        total = total.reindex(idx, fill_value=0)
         return total
 
     def _generate_combined_sum(self):
@@ -163,3 +166,28 @@ class DataCollector(object):
                                                                            "reported"] + \
                                                self._overseas_combined_sum["Overseas probable cases on the date of " \
                                                                            "reported"]
+
+    def get_cumulative_recovered(self):
+        return self._jhu.recovered
+
+    def get_cumulative_dead(self):
+        return self._jhu.dead
+
+
+class JohnsHopkins(object):
+
+    def __init__(self):
+        # CONFIRMED_CASES = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data" \
+        #                   "/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv "
+        RECOVERED_CASES = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data" \
+                          "/csse_covid_19_time_series/time_series_covid19_recovered_global.csv "
+        DEATH_CASES = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data" \
+                      "/csse_covid_19_time_series/time_series_covid19_deaths_global.csv "
+
+        recovered = pd.read_csv(RECOVERED_CASES, index_col=None)
+        dead = pd.read_csv(DEATH_CASES, index_col=None)
+
+        self.recovered = recovered[recovered['Country/Region'] == 'New Zealand']
+        self.recovered = self.recovered.drop(self.recovered.columns[[0, 1, 2, 3]], axis=1)
+        self.dead = dead[dead['Country/Region'] == 'New Zealand']
+        self.dead = self.dead.drop(self.dead.columns[[0, 1, 2, 3]], axis=1)
