@@ -1,4 +1,3 @@
-from urllib.request import urlopen
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
 
@@ -10,12 +9,6 @@ class FindExcelFile(object):
     def __init__(self):
         self._parent_url = "https://www.health.govt.nz/"
         self._cases_url = self._parent_url + CASES_URL
-
-        url_reader = urlopen(self._cases_url)
-        try:
-            html = url_reader.read().decode('utf-8')
-        finally:
-            url_reader.close()
 
         self._response = requests.get(self._cases_url)
         self._soup = BeautifulSoup(self._response.content, 'html.parser', parse_only=SoupStrainer('a'))
