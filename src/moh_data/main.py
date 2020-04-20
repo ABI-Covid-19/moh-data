@@ -84,7 +84,7 @@ class Basic:
         :return:
         """
         df = self._database.get_cumulative_recovered()
-        return df[df.columns[day]].values[-1]
+        return df[df.columns[37+day]].values[-1]
 
     def get_cumulative_dead_cases_on(self, day):
         """
@@ -94,7 +94,7 @@ class Basic:
         :return:
         """
         df = self._database.get_cumulative_dead()
-        return df[df.columns[day]].values[-1]
+        return df[df.columns[37+day]].values[-1]
 
     def get_confirmed_cases_on_date(self, date):
         """
