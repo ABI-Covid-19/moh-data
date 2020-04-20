@@ -247,11 +247,11 @@ if __name__ == '__main__':
         run_data.plot_daily_arrival_sum()
         run_data.plot_overseas_date_reported()
 
-        print('Cumulative confirmed cases on day 40 = ', run_data.get_cumulative_confirmed_cases_on_day(40))
-        print('Cumulative probable cases on day 40 = ', run_data.get_cumulative_probable_cases_on_day(40))
-        print('Cumulative total cases on day 40 = ', run_data.get_cumulative_total_cases_on_day(40))
-        print('Cumulative recovered cases on day 80 = ', run_data.get_cumulative_recovered_cases_on(80))
-        print('Cumulative dead cases on day 80 = ', run_data.get_cumulative_dead_cases_on(80))
+        print('Cumulative confirmed cases on day 45 = ', run_data.get_cumulative_confirmed_cases_on_day(45))
+        print('Cumulative probable cases on day 45 = ', run_data.get_cumulative_probable_cases_on_day(45))
+        print('Cumulative total cases on day 45 = ', run_data.get_cumulative_total_cases_on_day(45))
+        print('Cumulative recovered cases on day 45 = ', run_data.get_cumulative_recovered_cases_on(45))
+        print('Cumulative dead cases on day 45 = ', run_data.get_cumulative_dead_cases_on(45))
 
         print('Confirmed cases on 2020-04-14 = ', run_data.get_confirmed_cases_on_date((4, 14)))
         print('Confirmed cases between 2020-04-08 and 2020-04-14 =',
