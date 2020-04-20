@@ -14,7 +14,7 @@ except ImportError:
 class Basic:
 
     def __init__(self):
-        self._excel_file = DataCollector()
+        self._database = DataCollector()
         self._confirmed = None
         self._probable = None
         self._total_daily_confirmed = None
@@ -29,14 +29,14 @@ class Basic:
         self._run()
 
     def _run(self):
-        self._confirmed = self._excel_file.parse_confirmed()
-        self._probable = self._excel_file.parse_probable()
-        self._total_daily_confirmed = self._excel_file.get_daily_sum_confirmed()
-        self._total_daily_probable = self._excel_file.get_daily_sum_probable()
-        self._total_combined = self._excel_file.get_cumulative_sum()
-        self._grand_sum = self._excel_file.get_grand_sum()
-        self._total_arrival = self._excel_file.get_daily_arrival_sum()
-        self._total_overseas_reported_date = self._excel_file.get_overseas_reported_sum()
+        self._confirmed = self._database.parse_confirmed()
+        self._probable = self._database.parse_probable()
+        self._total_daily_confirmed = self._database.get_daily_sum_confirmed()
+        self._total_daily_probable = self._database.get_daily_sum_probable()
+        self._total_combined = self._database.get_cumulative_sum()
+        self._grand_sum = self._database.get_grand_sum()
+        self._total_arrival = self._database.get_daily_arrival_sum()
+        self._total_overseas_reported_date = self._database.get_overseas_reported_sum()
 
     def get_cumulative_confirmed_cases_on_day(self, day):
         """
@@ -75,6 +75,26 @@ class Basic:
             raise ValueError("You entered {0}. Total number of days available are {1}."
                              .format(day, len(sheet) - 1))
         return int(sheet.iloc[day])
+
+    def get_cumulative_recovered_cases_on(self, day):
+        """
+        Get the cumulative number of total recovered cases on a particular date
+
+        :param day: int corresponding to the day of which data is available for.
+        :return:
+        """
+        df = self._database.get_cumulative_recovered()
+        return df[df.columns[37+day]].values[-1]
+
+    def get_cumulative_dead_cases_on(self, day):
+        """
+        Get the cumulative number of total dead cases on a particular date
+
+        :param day: int corresponding to the day of which data is available for.
+        :return:
+        """
+        df = self._database.get_cumulative_dead()
+        return df[df.columns[37+day]].values[-1]
 
     def get_confirmed_cases_on_date(self, date):
         """
@@ -227,9 +247,11 @@ if __name__ == '__main__':
         run_data.plot_daily_arrival_sum()
         run_data.plot_overseas_date_reported()
 
-        print('Cumulative confirmed cases on day 41 = ', run_data.get_cumulative_confirmed_cases_on_day(40))
-        print('Cumulative probable cases on day 41 = ', run_data.get_cumulative_probable_cases_on_day(40))
-        print('Cumulative total cases on day 41 = ', run_data.get_cumulative_total_cases_on_day(40))
+        print('Cumulative confirmed cases on day 45 = ', run_data.get_cumulative_confirmed_cases_on_day(45))
+        print('Cumulative probable cases on day 45 = ', run_data.get_cumulative_probable_cases_on_day(45))
+        print('Cumulative total cases on day 45 = ', run_data.get_cumulative_total_cases_on_day(45))
+        print('Cumulative recovered cases on day 45 = ', run_data.get_cumulative_recovered_cases_on(45))
+        print('Cumulative dead cases on day 45 = ', run_data.get_cumulative_dead_cases_on(45))
 
         print('Confirmed cases on 2020-04-14 = ', run_data.get_confirmed_cases_on_date((4, 14)))
         print('Confirmed cases between 2020-04-08 and 2020-04-14 =',
